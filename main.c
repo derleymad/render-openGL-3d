@@ -68,7 +68,7 @@ void createWalls(Cube *wall1,Cube *wall3)
     drawCube(wall1);
 
 // wall3 = {0.0f, 0.0f, -5.0f, 10.0f, 2.0f, 0.1f, 1.0f, 0.0f, 0.0f}; //default
-    wall3->x = -0.0f;
+    wall3->x = 0.0f;
     wall3->y = 0.0f;
     wall3->z = -5.0f;
     wall3->width = 10.0f;
@@ -83,11 +83,11 @@ void createWalls(Cube *wall1,Cube *wall3)
 void createTeaPot(Teapot *teapot)
 {
 // teapot = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f}; //default
-    teapot->x = 0.0f;
+    teapot->x = -4.0f;
     teapot->y = 0.0f;
-    teapot->z = 0.0f;
+    teapot->z = 2.0f;
     teapot->scale = 1.0f;
-    teapot->rotation = 1.0f;
+    teapot->rotation = 60.0f;
     teapot->red = 0.0f;
     teapot->green = 0.0f;
     teapot->blue = 1.0f; //azul
@@ -110,10 +110,10 @@ void createTorus(Torus *torus)
 void createSphere(Sphere *sphere)
 {
 // sphere = {-2.0f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f};  //default
-    sphere->x = -2.0f;
+    sphere->x = -3.0f;
     sphere->y = 0.0f;
-    sphere->z = 0.0f;
-    sphere->radius = 0.5f;
+    sphere->z = -3.0f;
+    sphere->radius = 1.0f;
     sphere->red = 1.0f; //laranja
     sphere->green = 0.5f;
     sphere->blue = 0.0f;
