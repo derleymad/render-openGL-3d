@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="render-openGL-3d" />
+		<Option title="opengl-render" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/render-openGL-3d" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/opengl-render" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/render-openGL-3d" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/opengl-render" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -31,9 +31,25 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="cube.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cube.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="sphere.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sphere.h" />
+		<Unit filename="teapot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="teapot.h" />
+		<Unit filename="torus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="torus.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
