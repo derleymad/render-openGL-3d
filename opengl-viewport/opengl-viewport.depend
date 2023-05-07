@@ -1,0 +1,4 @@
+# depslib dependency file v1.0
+1683478990 source:/home/derley/AAA/render-openGL-3d/opengl-viewport/main.c
+	<GL/glut.h>
+

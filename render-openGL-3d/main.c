@@ -287,7 +287,6 @@ void mouseWheel(int wheel, int direction, int x, int y)
 
     glutPostRedisplay();
 }
-
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
@@ -305,3 +304,4 @@ int main(int argc, char** argv)
 
     return 0;
 }
+
