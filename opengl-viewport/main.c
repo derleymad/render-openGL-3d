@@ -8,7 +8,7 @@ float angleYZ = 0.0f;
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    glEnable(GL_COLOR_MATERIAL);
 
 //------------ iluminação -------------------------------------------------
 
@@ -35,8 +35,8 @@ void display() {
     gluPerspective(45.0f, 1.0f, 1.0f, 100.0f);
 
     // camera para viewport perspectiva
-    glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
-    glMatrixMode(GL_MODELVIEW);
+    glViewport(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2, glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT));
+        glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(5.0f, 5.0f, 5.0f,
               0.0f, 0.0f, 0.0f,
@@ -63,24 +63,24 @@ void display() {
     //viewport XY
     glViewport(0, glutGet(GLUT_WINDOW_HEIGHT) / 2, glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
     glPushMatrix();
-    glRotatef(angleXY, 0.0f, 1.0f, 0.0f);  // Rotação em torno do eixo Y
-    glColor3f(0.0f, 1.0f, 0.0f);  // Cor verde
+    glRotatef(angleXY, 0.0f, 1.0f, 0.0f);  //eixo y
+    glColor3f(0.0f, 1.0f, 0.0f);  // verde
     glutSolidTeapot(1.0f);
     glPopMatrix();
 
     // viewport XZ
     glViewport(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2, glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
     glPushMatrix();
-    glRotatef(angleXZ, 1.0f, 0.0f, 0.0f);
-    glColor3f(0.0f, 0.0f, 1.0f);  // Cor azul
+    glRotatef(angleXZ, 0.0f, 1.0f, 0.0f);
+    glColor3f(0.0f, 0.0f, 1.0f);  // azul
     glutSolidTeapot(1.0f);
     glPopMatrix();
 
     //viewport YZ
     glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2);
     glPushMatrix();
-    glRotatef(angleYZ, 0.0f, 0.0f, 1.0f);  // Rotação em torno do eixo Z
-    glColor3f(1.0f, 1.0f, 0.0f);  // Cor amarela
+    glRotatef(angleYZ, 0.0f, 1.0f, 0.0f);  // eixo z
+    glColor3f(1.0f, 1.0f, 0.0f);  //amarelo
     glutSolidTeapot(1.0f);
     glPopMatrix();
 
