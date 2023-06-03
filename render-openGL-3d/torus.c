@@ -10,5 +10,4 @@ void drawTorus(Torus* torus) {
    glutSolidTorus(torus->radiusInner, torus->radiusOuter, 50, 50);
 
    glPopMatrix();
-       //falta fazer rotacao 90graus
 }

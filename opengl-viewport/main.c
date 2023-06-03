@@ -7,13 +7,8 @@ float angle = 0.0f;  // Ângulo de rotação do bule
 
 void displayXY()
 {
+    glLoadIdentity();
     glViewport(0, 200, 200, 200);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-15.0, 15.0, -15.0, 15.0, -20.0, 20.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
     glRotatef(angle, 0.0f, 1.0f, 0.0f);
     glColor3f(1.0f, 0.65f, 0.0f); //red
     glutSolidTeapot(5.0f);
@@ -21,13 +16,11 @@ void displayXY()
 
 void displayYZ()
 {
+    glLoadIdentity();
     glViewport(200, 200, 200, 200);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-15.0, 15.0, -15.0, 15.0, -20.0, 20.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    gluLookAt(15.0f, 0.0f, -1.0f,
+              0.0f, 0.0f, 0.0f,
+              0.0f, 1.0f, 0.0f);
     glRotatef(angle, 0.0f, 1.0f, 0.0f);
     glColor3f(1.0f, 0.65f, 0.0f); //segundo
     glutSolidTeapot(5.0f);
@@ -35,13 +28,8 @@ void displayYZ()
 
 void displayXZ()
 {
+    glLoadIdentity();
     glViewport(0, 0, 200, 200);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-15.0, 15.0, -15.0, 15.0, -20.0, 20.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
     gluLookAt(0.0f, 15.0f, 0.0f,
               0.0f, 0.0f, 0.0f,
               0.0f, 0.0f, -1.0f); //vetor "up" apontando para baixo para ver de cima
@@ -53,28 +41,31 @@ void displayXZ()
 
 void displayPerspective()
 {
+    glLoadIdentity();
     glViewport(200, 0, 200, 200);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-15.0, 15.0, -15.0, 15.0, -20.0, 20.0);
-
-    //gluPerspective(100.0f, 1.0f, 1.0f, 10.0f); //n muda isso
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    gluLookAt(0.0f, 2.0f, 5.0f,
+    gluPerspective(10.0f, 1.0f, -20.0f, 20.0f);
+    gluLookAt(9.0f, 10.0f, 1.0f,
               0.0f, 0.0f, 0.0f,
               0.0f, 1.0f, 0.0f);
 
     glRotatef(angle, 0.0f, 1.0f, 0.0f);
-    glColor3f(1.0f, 0.65f, 0.0f); //perspectiva
+    glColor3f(1.0f, 0.65f, 0.0f);
     glutSolidTeapot(5.0f);
 }
 
-void enableLight()
+void update(int value)
 {
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+    angle += 1.0f;
+    if (angle > 360.0f)
+    {
+        angle -= 360.0f;
+    }
+    glutPostRedisplay();
+    glutTimerFunc(16, update, 0);
+}
+
+void lighting()
+{
     GLfloat mat_diffuse[] = {0.8f, 0.8f, 0.8f, 1.0f};    // Reflexão difusa
     GLfloat mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};   // Reflexão especular
     GLfloat mat_shininess[] = {100.0f};                  // Brilho especular
@@ -93,63 +84,48 @@ void enableLight()
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-
-    // Habilitar a iluminação
     glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+}
+
+void init()
+{
+    glClearColor(0.0, 0.0, 0.0, 0.0); // define a cor de fundo
+    glEnable(GL_DEPTH_TEST); // habilita teste de profundidade
+    glEnable(GL_COLOR_MATERIAL); // habilita a cor nos objetos
+    glMatrixMode(GL_PROJECTION); // define quea matriz é de projeção
+    glLoadIdentity(); // carrega a matriz identidade
+    glOrtho(-15.0, 15.0, -15.0, 15.0, -20.0, 20.0);
+
+    lighting();
 }
 
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_COLOR_MATERIAL);
+    glMatrixMode(GL_MODELVIEW); // define que a matriz é a model view
 
-    enableLight(); // e se fez a luz
-
-    //desenha os bules em cada perspectiva
-    //drawViewportBorders();
     displayXY();
     displayXZ();
     displayYZ();
-
-    displayPerspective(); //o capeta
+    displayPerspective();
 
     glutSwapBuffers();
 }
 
 
-void update(int value)
-{
-    angle += 1.0f;
-    if (angle > 360.0f)
-    {
-        angle -= 360.0f;
-    }
-
-    glutPostRedisplay();
-    glutTimerFunc(16, update, 0);
-}
-
-
-// funcao para atualizar valores (para animação)
-
-
 int main(int argc, char** argv)
 {
-    // criacao da janela
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInit(&argc, argv); //Inicializa o glut
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); //Configura o modo de display
     glutInitWindowSize(400, 400);
     glutCreateWindow("Renderização com Viewports");
 
-    glutDisplayFunc(display);
-
-    //glutDisplayFunc(drawViewportXZ);
-
     glutTimerFunc(0, update, 0);
 
-    glEnable(GL_DEPTH_TEST);
+    init();
+    glutDisplayFunc(display);
     glutMainLoop();
 
     return 1;
-
 }

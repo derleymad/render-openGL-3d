@@ -8,39 +8,34 @@ float cameraX = 3.0;
 float cameraY = 4.0;
 float cameraZ = 6.0;
 
-int windowWidth = 800;
-int windowHeight = 600;
+float windowWidth = 800.0;
+float windowHeight = 600.0;
+
 // Variáveis para armazenar a posição anterior do mouse
 int lastMouseX = 0;
 int lastMouseY = 0;
 
-//armazena a posição da câmera
-float cameraPointX=0.0;
-float cameraPointY=0.0;
+//Armazena a posição da câmera
+float cameraPointX = 0.0;
+float cameraPointY = 0.0;
 
 float lookAtX = 0.0;
-float lookAtY =0.0;
+float lookAtY = 0.0;
 float lookAtZ = 0.0;
 
 int mouseX = 0;
 int mouseY = 0;
 
-
-//cria objetos
-Cube *ground;//chao
-Cube *wall1;   //parede esquerda
-Cube *wall3;   //parede direita
+//Cria objetos
+Cube *ground; //chao
+Cube *wall1; //parede esquerda
+Cube *wall3; //parede direita
 Teapot *teapot; //bule
-Torus *torus;   //toro
+Torus *torus; //toro
 Sphere *sphere; //esfera
-
-//Cube wall2 = {5.0f, 0.0f, 0.0f, 0.1f, 2.0f, 10.0f, 0.8f, 0.8f, 0.8f};
-//Cube wall4 = {0.0f, 0.0f, 5.0f, 10.0f, 2.0f, 0.1f, 0.8f, 0.8f, 0.8f};
-
 
 void createGround(Cube *ground)
 {
-//ground = {0.0f, -1.0f, 0.0f, 10.0f, 0.1f, 10.0f, 0.5f, 0.5f, 0.5f}; //default
     ground->x = 0.0f;
     ground->y = -1.0f;
     ground->z = 0.0f;
@@ -52,10 +47,9 @@ void createGround(Cube *ground)
     ground->blue = 0.0f;
     drawCube(ground);
 }
+
 void createWalls(Cube *wall1,Cube *wall3)
 {
-
-// wall1 = {-5.0f, 0.0f, 0.0f, 0.1f, 2.0f, 10.0f, 0.0f, 0.0f, 0.0f}; //default
     wall1->x = -5.0f;
     wall1->y = 0.0f;
     wall1->z = 0.0f;
@@ -67,7 +61,6 @@ void createWalls(Cube *wall1,Cube *wall3)
     wall1->blue = 0.0f;
     drawCube(wall1);
 
-// wall3 = {0.0f, 0.0f, -5.0f, 10.0f, 2.0f, 0.1f, 1.0f, 0.0f, 0.0f}; //default
     wall3->x = 0.0f;
     wall3->y = 0.0f;
     wall3->z = -5.0f;
@@ -82,7 +75,6 @@ void createWalls(Cube *wall1,Cube *wall3)
 
 void createTeaPot(Teapot *teapot)
 {
-// teapot = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f}; //default
     teapot->x = -4.0f;
     teapot->y = 0.0f;
     teapot->z = 2.0f;
@@ -96,7 +88,6 @@ void createTeaPot(Teapot *teapot)
 
 void createTorus(Torus *torus)
 {
-// torus = {2.0f, 0.0f, 0.0f, 0.5f, 1.0f, 0.0f, 1.0f, 0.0f}; //default
     torus->x = 2.0f;
     torus->y = 0.0f;
     torus->z = 0.0f;
@@ -107,9 +98,9 @@ void createTorus(Torus *torus)
     torus->blue = 0.0f; //azul
     drawTorus(torus);
 }
+
 void createSphere(Sphere *sphere)
 {
-// sphere = {-2.0f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f};  //default
     sphere->x = -3.0f;
     sphere->y = 0.0f;
     sphere->z = -3.0f;
@@ -118,112 +109,6 @@ void createSphere(Sphere *sphere)
     sphere->green = 0.5f;
     sphere->blue = 0.0f;
     drawSphere(sphere);
-}
-
-
-void display()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glEnable(GL_COLOR_MATERIAL);
-
-    // perspectiva
-    gluPerspective(45.0, 800.0/600.0, 0.1, 100.0);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-
-    //lookAtX = cameraX - ((mouseX / windowWidth) - 0.5);
-    //lookAtY = cameraY + ((mouseY / windowHeight) - 0.5);
-    // lookAtZ = cameraZ - 1.0;
-
-    //posicionamento
-    gluLookAt(cameraX,cameraY,cameraZ,   // camera pos. //horizont, vertical  //zoom (3,4,6)
-              lookAtX, lookAtY, lookAtZ,   // ponto de foco (onde a camera esta olhando eu acho)
-              0.0, 1.0, 0.0);  // vetor orientacao n sei (up)
-    //iluminação
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-
-    //posicao da lus (tipo um ponto de iluminacao com a vela)
-    GLfloat lightPosition[] = { 0.0, 1.0, 0.0, 0.0 };
-    //luz global (tipo o brilho da tela)
-    GLfloat ambientLight[] = { 0.1, 0.1, 0.1, 1.0 };
-    //reflexao dos objetos (difusa)
-    GLfloat diffuseLight[] = { 1.0, 1.0, 1.0, 1.0 };
-    //para deixar liso e polido
-    GLfloat specularLight[] = { 0.0, 1.0, 0.0, 1.0 };
-
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
-
-
-
-    //drawEveryThing();
-    createGround(&ground);
-    createTorus(&torus);
-    createWalls(&wall1,&wall3);
-    createSphere(&sphere);
-    createTeaPot(&teapot);
-
-    glFlush();
-
-    glutSwapBuffers();
-}
-
-void drawEveryThing()
-{
-//BULE
-    glColor3f(0.0f, 0.0f, 1.0f);  //azul
-    glTranslatef(-1.0f, 1.0f, 0.0f);
-    glutSolidTeapot(1);
-
-    //BOLA
-    glColor3f(1.0, 0.5, 0.0);  //laranja
-    glTranslatef(0.0f, 0.0f, -2.0f);
-    glutSolidSphere(1, 20, 20);
-
-    //TORO
-    glColor3f(0.0, 0.5, 0.0);  //verde
-    glTranslatef(2.0f, 0.0f, 0.0f);
-    //bug glRotatef(90.0f,2.0f,0.0f,0.0f);
-    //(espessura, tamanho , nsei, nsei)
-    glutSolidTorus(0.15, 0.5, 50, 50);
-
-    //chao
-    glColor3f(1.0f, 0.0f, 0.0f); //vermelho
-    glPushMatrix();
-    glTranslatef(-1.0f, -1.0f, 0.0f); //abaixo da origem
-    glScalef(6.0f, 0.1f, 6.0f); //dimensoes
-    glutSolidCube(1.0f);
-    glPopMatrix();
-
-    //paredes esquerda
-    //glColor3f(GLUT_RED);
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glPushMatrix();
-    glTranslatef(-4.0f, 0.0f, 0.0f); //joga para esquerda
-    glScalef(0.1f, 2.0f, 6.0f); // dimensoes
-    glutSolidCube(1.0f);
-    glPopMatrix();
-
-    //glPushMatrix();
-    //glTranslatef(5.0f, 0.0f, 0.0f); // joga a direita
-    //glScalef(0.1f, 2.0f, 10.0f); // dimensoes
-    //glutSolidCube(1.0f);
-    //glPopMatrix();
-
-    //parede trazeira
-    glPushMatrix();
-    glTranslatef(-1.0f, 0.0f, -3.0f); // trazeira
-    glScalef(6.0f, 2.0f, 0.1f); //dimensoes
-    glutSolidCube(1.0f);
-    glPopMatrix();
 }
 
 void mouseMotion(int x, int y)
@@ -266,8 +151,6 @@ void mouse(int button, int state, int x, int y)
         cameraZ += 0.1;  // Zoom out
     }
 
-
-
     glutPostRedisplay();
 
 }
@@ -287,19 +170,79 @@ void mouseWheel(int wheel, int direction, int x, int y)
 
     glutPostRedisplay();
 }
+
+//Iluminação
+void lighting(){
+    //posicao da lus (tipo um ponto de iluminacao com a vela)
+    GLfloat lightPosition[] = { 0.0, 1.0, 0.0, 0.0 };
+    //luz global (tipo o brilho da tela)
+    GLfloat ambientLight[] = { 0.1, 0.1, 0.1, 1.0 };
+    //reflexao dos objetos (difusa)
+    GLfloat diffuseLight[] = { 1.0, 1.0, 1.0, 1.0 };
+    //para deixar liso e polido
+    GLfloat specularLight[] = { 0.0, 1.0, 0.0, 1.0 };
+
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+
+    //Iluminação
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+}
+
+void init(){
+    glClearColor(0.0, 0.0, 0.0, 0.0); // define a cor de fundo
+    glEnable(GL_DEPTH_TEST); // habilita teste de profundidade
+    glEnable(GL_COLOR_MATERIAL); // habilita a cor nos objetos
+    glMatrixMode(GL_PROJECTION); // define quea matriz é de projeção
+    glLoadIdentity(); // carrega a matriz identidade
+    /*4 primeiros parâmetros são as coordenadas da janela de recorte
+    e os 2 últimos as distâncias para os planos de recorte near/far*/
+    // Não consigo definir o glOrtho
+    //glOrtho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);
+}
+
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Perspectiva
+    gluPerspective(45.0, windowWidth/windowHeight, 0.1, 100.0);
+
+    glMatrixMode(GL_MODELVIEW); // define que a matriz é a model view
+    glLoadIdentity();
+
+    //Posicionamento da câmera
+    gluLookAt(cameraX,cameraY,cameraZ,   // posição da câmera
+              lookAtX, lookAtY, lookAtZ,   // onde a camera esta apontando
+              0.0, 1.0, 0.0);  // vetor view-up
+
+    //Adiciona a iluminação
+    lighting();
+
+    //Desenha os objetos
+    createGround(&ground);
+    createTorus(&torus);
+    createWalls(&wall1, &wall3);
+    createSphere(&sphere);
+    createTeaPot(&teapot);
+
+    glutSwapBuffers();
+}
+
 int main(int argc, char** argv)
 {
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+    glutInit(&argc, argv); //Inicializa o glut
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); //Configura o modo de display
     glutInitWindowSize(windowWidth, windowHeight);
-    glutCreateWindow("Cena bule,bola e toro");
-
-    glEnable(GL_DEPTH_TEST);  //teste de profundidade
-
-    glutDisplayFunc(display);
-
+    glutCreateWindow("Cena bule, bola e toro");
 
     glutMouseFunc(mouse);
+
+    init();
+    glutDisplayFunc(display);
     glutMainLoop();
 
     return 0;
